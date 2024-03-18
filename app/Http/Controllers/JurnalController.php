@@ -82,7 +82,33 @@ class JurnalController extends Controller
         return redirect()->route('jurnal.index')->with('success', 'Data jurnal berhasil ditambahkan');
     }
 
-    public function edit(){
-        return view('jurnal.edit');
+    public function edit(Jurnal $jurnal){
+        $akuns = Akun::all();
+        return view('jurnal.edit', compact('jurnal', 'akuns'));
+    }
+
+    public function update(Request $request, Jurnal $jurnal){
+        $request->validate([
+            'tgl_transaksi' => 'required|date',
+            'akun_id' => [Rule::exists('akuns', 'id')],
+            'nominal' => 'required|numeric',
+            'keterangan' => 'required|max:30',
+            'tipe_transaksi' => 'required|in:d,k',
+        ]);
+
+        $jurnal->update([
+            'tgl_transaksi' => $request->tgl_transaksi,
+            'akun_id' => $request->akun_id,
+            'nominal' => $request->nominal,
+            'keterangan' => $request->keterangan,
+            'tipe_transaksi' => $request->tipe_transaksi,
+        ]);
+
+        return redirect()->route('jurnal.index')->with('success', 'Data jurnal berhasil diubah');
+    }
+
+    public function destroy(Jurnal $jurnal){
+        $jurnal->delete();
+        return redirect()->route('jurnal.index')->with('success', 'Data jurnal berhasil dihapus');
     }
 }
