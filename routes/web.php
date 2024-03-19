@@ -5,8 +5,9 @@ use App\Http\Controllers\AkunController;
 use App\Http\Controllers\JurnalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuBesarController;
+use App\Http\Controllers\NeracaController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/bukubesar/{akun}', [BukuBesarController::class, 'show'])->name('bukubesar.show');
     Route::get('/bukubesar/detail/{akun}/{tanggal}', [BukuBesarController::class, 'detail'])->name('bukubesar.detail');
     
+    //Neraca
+    Route::get('/neraca', [NeracaController::class, 'index'])->name('neraca.index');
 });
 
 require __DIR__.'/auth.php';
