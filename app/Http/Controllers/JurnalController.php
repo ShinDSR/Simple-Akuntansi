@@ -18,16 +18,6 @@ class JurnalController extends Controller
         return view('jurnal.index', compact('list_jurnal', 'total_jurnal'));
     }
 
-    // public function show(){
-    //     $list_jurnal = Jurnal::selectRaw("CONCAT(MONTH(tgl_transaksi, '-', YEAR(tgl_transaksi)) as tanggal")
-    //     ->distinct()
-    //     ->get();
-
-    //     $total_jurnal = $list_jurnal->count();
-
-    //     return view('jurnal.show', compact('list_jurnal', 'total_jurnal'));
-    // }
-
     public function detail(Request $request, $tanggal){
         if(empty($tanggal)) return redirect()->route('jurnal.index');
 

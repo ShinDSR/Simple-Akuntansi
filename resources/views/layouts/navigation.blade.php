@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('jurnal.index')" :active="request()->routeIs('jurnal.*')">
                         {{ __('Jurnal') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('bukubesar.index')" :active="request()->routeIs('bukubesar.*')">
+                        {{ __('Buku Besar') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                         {{ __('User') }}
                     </x-nav-link>
@@ -90,6 +93,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('jurnal.index')" :active="request()->routeIs('jurnal.*')">
                 {{ __('Jurnal') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('bukubesar.index')" :active="request()->routeIs('bukubesar.*')">
+                {{ __('Buku Besar') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                 {{ __('User') }}

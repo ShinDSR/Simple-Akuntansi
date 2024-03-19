@@ -6,6 +6,7 @@ use App\Http\Controllers\JurnalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BukuBesarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/jurnal/{jurnal}/edit', [JurnalController::class, 'edit'])->name('jurnal.edit');
     Route::patch('/jurnal/{jurnal}', [JurnalController::class, 'update'])->name('jurnal.update');
     Route::delete('/jurnal/{jurnal}', [JurnalController::class, 'destroy'])->name('jurnal.destroy');
+
+    //Buku Besar
+    Route::get('/bukubesar', [BukuBesarController::class, 'index'])->name('bukubesar.index');
+    Route::get('/bukubesar/{akun}', [BukuBesarController::class, 'show'])->name('bukubesar.show');
+    Route::get('/bukubesar/detail/{akun}/{tanggal}', [BukuBesarController::class, 'detail'])->name('bukubesar.detail');
     
 });
 
