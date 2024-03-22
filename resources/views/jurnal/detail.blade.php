@@ -15,15 +15,11 @@
                         </div>
                         <div>
                             @if (session('success'))
-                            <p x-data="{ show: true }" x-show="show" x-transition
-                                x-init="setTimeout(() => show = false, 5000)"
-                                class="text-sm text-green-600 dark:text-green-400">{{ session('success') }}
+                            <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)" class="text-sm text-green-600 dark:text-green-400">{{ session('success') }}
                             </p>
                             @endif
                             @if (session('danger'))
-                            <p x-data="{ show: true }" x-show="show" x-transition
-                                x-init="setTimeout(() => show = false, 5000)"
-                                class="text-sm text-red-600 dark:text-red-400">{{ session('danger') }}
+                            <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)" class="text-sm text-red-600 dark:text-red-400">{{ session('danger') }}
                             </p>
                             @endif
                         </div>
@@ -41,7 +37,10 @@
                                     Tanggal
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Akun
+                                    Kode Akun
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Nama Akun
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Debet
@@ -70,30 +69,35 @@
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
+                                        {{ $data->akun->kode_akun }}
+                                    </p>
+                                </td>
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                    <p>
                                         {{ $data->akun->nama_akun }}
                                     </p>
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
                                         @if ($data->tipe_transaksi == 'd')
-                                            Rp. {{ number_format($data->nominal, 0, ',', '.') }},-
+                                        Rp. {{ number_format($data->nominal, 0, ',', '.') }},-
                                         @else
-                                            -
+                                        -
                                         @endif
                                     </p>
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
                                         @if ($data->tipe_transaksi == 'k')
-                                            Rp. {{ number_format($data->nominal, 0, ',', '.') }},-
+                                        Rp. {{ number_format($data->nominal, 0, ',', '.') }},-
                                         @else
-                                            -
+                                        -
                                         @endif
                                     </p>
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-3">
-                                    <form action="{{ route('jurnal.edit', $data) }}" method="Post">
+                                        <form action="{{ route('jurnal.edit', $data) }}" method="Post">
                                             @csrf
                                             @method('GET')
                                             <button type="submit" class="text-green-600 dark:text-green-400">
@@ -118,39 +122,51 @@
                                 </td>
                             </tr>
                             @endforelse
-                            
                         </tbody>
-                    </table>
-                    <table class="w-full text-sm text-left text-blue-500 dark:text-blue-400">
-                        <tfoot class="text-xs text-blue-700 uppercase bg-blue-300 dark:bg-blue-700 dark:text-blue-100">
+                        <tfoot class="text-blue-700 uppercase bg-blue-300 dark:bg-blue-700 dark:text-blue-100 text-base">
                             <tr>
-                                <th class="px-5 py-3 text-center">
+                                <th scope="col" class="px-6 py-3">
+
                                 </th>
-                                <th class="px-10 py-3 text-center">
-                                        TOTAL
+                                <th scope="col" class="px-6 py-3">
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-center">
-                                        Rp. {{ number_format($total_debet, 0, ',', '.') }},-
+                                <th scope="col" class="px-6 py-3">
+                                    Total
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-center">
-                                        Rp. {{ number_format($total_kredit, 0, ',', '.') }},-
+                                <th scope="col" class="px-6 py-3">
                                 </th>
-                                @if ($total_debet == $total_kredit)
-                                <th scope="col" class="px-2 py-3 text-center text-xs text-green-700 uppercase bg-green-400 dark:bg-green-600 dark:text-green-200">
-                                        BALANCE
+                                <th scope="col" class="px-6 py-3">
+                                    Rp. {{ number_format($total_debet, 0, ',', '.') }},-
                                 </th>
-                                @else
-                                <th scope="col" class="px-2 py-3 text-center text-xs text-red-700 uppercase bg-red-400 dark:bg-red-600 dark:text-red-200">
-                                        UNBALANCE
+                                <th scope="col" class="px-6 py-3">
+                                    Rp. {{ number_format($total_kredit, 0, ',', '.') }},-
                                 </th>
-                                @endif
+                                <th scope="col" class="px-6 py-3">
+                                </th>
                             </tr>
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Saldo
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Rp. {{ number_format($saldo, 0, ',', '.') }},-
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                </th>
                         </tfoot>
                     </table>
-                    <br>
-                    
+                </div>
+                <div class="p-6 text-xl text-gray-900 dark:text-gray-100">
                     <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-4">
+                        <div>
                             <x-cancel-button href="{{ route('jurnal.index') }}" />
                         </div>
                     </div>

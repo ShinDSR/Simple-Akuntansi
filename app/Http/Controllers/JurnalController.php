@@ -41,8 +41,9 @@ class JurnalController extends Controller
             ->sum('nominal');
 
         $total_jurnal = $list_jurnal->count();
+        $saldo = $total_debet - $total_kredit;
 
-        return view('jurnal.detail', compact('list_jurnal', 'total_jurnal', 'periode', 'total_debet', 'total_kredit'));
+        return view('jurnal.detail', compact('list_jurnal', 'total_jurnal', 'periode', 'total_debet', 'total_kredit', 'saldo'));
     }
 
     public function search(){
