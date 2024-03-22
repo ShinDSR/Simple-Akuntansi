@@ -25,34 +25,66 @@
                                 <th scope="col" class="px-6 py-3">Akun</th>
                                 <th scope="col" class="px-6 py-3">Debet</th>
                                 <th scope="col" class="px-6 py-3">Kredit</th>
+                                <th scope="col" class="px-6 py-3">Result</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $no = 1; ?>
                             @foreach ($data as $row)
                             <tr class="odd:bg-white odd:dark:bg-gray-800 even:bg-gray-50 even:dark:bg-gray-700">
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ $no++ }}</td>
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ $row['kode_akun'] }}</td>
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ $row['nama_akun'] }}</td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    {{ $row['debet'] > 0 ? 'Rp. ' . number_format($row['debet'], 0, ',', '.') . ',-' : '-' }}
+                                    {{ $no++ }}
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    {{ $row['kredit'] > 0 ? 'Rp. ' . number_format($row['kredit'], 0, ',', '.') . ',-' : '-' }}
+                                    {{ $row['kode_akun'] }}
+                                </td>
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                    {{ $row['nama_akun'] }}
+                                </td>
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                    Rp. {{ number_format($row['debet'], 0, ',') }},-
+                                </td>
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                    Rp. {{ number_format($row['kredit'], 0, ',') }},-
+                                </td>
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
+                        <tfoot class="text-blue-700 uppercase bg-blue-300 dark:bg-blue-700 dark:text-blue-100 text-base">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Total
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Rp. {{ number_format($total_saldo_debet, 0, ',', '.') }},-
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Rp. {{ number_format($total_saldo_kredit, 0, ',', '.') }},-
+                                </th>
+                                @if($total_saldo_debet == $total_saldo_kredit)
+                                <th scope="col" class="px-6 py-3 text-green-700 uppercase bg-green-400 dark:bg-green-600 dark:text-green-200">
+                                    BALANCE
+                                </th>
+                                @else
+                                <th scope="col" class="px-6 py-3 text-red-700 uppercase bg-red-400 dark:bg-red-600 dark:text-red-200">
+                                    UNBALANCE
+                                </th>
+                                @endif
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
 
                 <div class="p-6 text-xl text-gray-900 dark:text-gray-100">
                     <div class="flex items-center justify-between">
                         <div>
-                            Total Saldo Debet: Rp. {{ number_format($total_saldo_debet, 0, ',', '.') }},-
-                        </div>
-                        <div>
-                            Total Saldo Kredit: Rp. {{ number_format($total_saldo_kredit, 0, ',', '.') }},-
+                            <x-cancel-button href="{{ route('neraca.index') }}" />
                         </div>
                     </div>
                 </div>
