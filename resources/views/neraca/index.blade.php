@@ -35,7 +35,8 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-3">
-                                        <form action="{{ url('neraca/detail/'.date('Y-m-d', strtotime('1-'.$data->tanggal)))}}" method="Post">
+                                        <!-- <form action="{{ url('neraca/detail/'.date('Y-m-d', strtotime('1-'.$data->tanggal)).'/'.$data->akun_id) }}" method="GET"> -->
+                                        <form action="{{ route('neraca.detail', ['tanggal' => date('Y-m-d', strtotime('1-'.$data->tanggal)), 'akun' => $data->akun_id]) }}" method="GET">
                                             @csrf
                                             @method('GET')
                                             <button type="submit" class="text-blue-600 dark:text-blue-400">Detail</button>

@@ -28,22 +28,25 @@ class JurnalController extends Controller
         $list_jurnal = Jurnal::whereMonth('tgl_transaksi', $bulan)
             ->whereYear('tgl_transaksi', $tahun)
             ->orderBy('tgl_transaksi', 'asc')
+            ->with('akun')
             ->get();
         $total_debet = Jurnal::where('tipe_transaksi', 'd')
             ->whereMonth('tgl_transaksi', $bulan)
             ->whereYear('tgl_transaksi', $tahun)
             ->orderBy('tgl_transaksi', 'asc')
+            ->with('akun')
             ->sum('nominal');
         $total_kredit = Jurnal::where('tipe_transaksi', 'k')
             ->whereMonth('tgl_transaksi', $bulan)
             ->whereYear('tgl_transaksi', $tahun)
             ->orderBy('tgl_transaksi', 'asc')
+            ->with('akun')
             ->sum('nominal');
 
-        $total_jurnal = $list_jurnal->count();
+        // $total_jurnal = $list_jurnal->count();
         $saldo = $total_debet - $total_kredit;
 
-        return view('jurnal.detail', compact('list_jurnal', 'total_jurnal', 'periode', 'total_debet', 'total_kredit', 'saldo'));
+        return view('jurnal.detail', compact('list_jurnal', 'periode', 'total_debet', 'total_kredit', 'saldo'));
     }
 
     public function search(){

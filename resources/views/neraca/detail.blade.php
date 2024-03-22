@@ -22,24 +22,24 @@
                             <tr>
                                 <th scope="col" class="px-6 py-3">NO</th>
                                 <th scope="col" class="px-6 py-3">Kode Akun</th>
-                                <th scope="col" class="px-6 py-3">Akun</th>
-                                <th scope="col" class="px-6 py-3">Debet</th>
-                                <th scope="col" class="px-6 py-3">Kredit</th>
+                                <th scope="col" class="px-6 py-3">Nama Akun</th>
+                                <th scope="col" class="px-6 py-3">Aktiva</th>
+                                <th scope="col" class="px-6 py-3">Pasiva</th>
                                 <th scope="col" class="px-6 py-3">Result</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $no = 1; ?>
-                            @foreach ($data as $row)
+                            @foreach ($daftar_buku as $row)
                             <tr class="odd:bg-white odd:dark:bg-gray-800 even:bg-gray-50 even:dark:bg-gray-700">
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     {{ $no++ }}
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    {{ $row['kode_akun'] }}
+                                    {{ $row->akun->kode_akun }}
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    {{ $row['nama_akun'] }}
+                                    {{ $row->akun->nama_akun }}
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     Rp. {{ number_format($row['debet'], 0, ',') }},-
@@ -52,7 +52,7 @@
                             </tr>
                             @endforeach
                         </tbody>
-                        <tfoot class="text-blue-700 uppercase bg-blue-300 dark:bg-blue-700 dark:text-blue-100 text-base">
+                        <!-- <tfoot class="text-blue-700 uppercase bg-blue-300 dark:bg-blue-700 dark:text-blue-100 text-base">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                 </th>
@@ -77,7 +77,7 @@
                                 </th>
                                 @endif
                             </tr>
-                        </tfoot>
+                        </tfoot> -->
                     </table>
                 </div>
 
