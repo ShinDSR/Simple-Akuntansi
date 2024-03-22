@@ -15,16 +15,14 @@
                         </div>
                         <div>
                             @if (session('success'))
-                            <p x-data="{ show: true }" x-show="show" x-transition
-                                x-init="setTimeout(() => show = false, 5000)"
-                                class="text-sm text-green-600 dark:text-green-400">{{ session('success') }}
-                            </p>
+                                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)"
+                                    class="text-sm text-green-600 dark:text-green-400">{{ session('success') }}
+                                </p>
                             @endif
                             @if (session('danger'))
-                            <p x-data="{ show: true }" x-show="show" x-transition
-                                x-init="setTimeout(() => show = false, 5000)"
-                                class="text-sm text-red-600 dark:text-red-400">{{ session('danger') }}
-                            </p>
+                                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)"
+                                    class="text-sm text-red-600 dark:text-red-400">{{ session('danger') }}
+                                </p>
                             @endif
                         </div>
                     </div>
@@ -46,38 +44,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no = 1; ?>
                             @forelse ($list_jurnal as $data)
-                            <tr class="odd:bg-white odd:dark:bg-gray-800 even:bg-gray-50 even:dark:bg-gray-700">
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    <p>
-                                        {{ $no++ }}
-                                    </p>
-                                </td>
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    <p>
-                                        {{ date('F Y', strtotime('1-'.$data->tanggal)) }}
-                                    </p>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex space-x-3">
-                                        <form action="{{ url('jurnal/detail/'.date('Y-m-d', strtotime('1-'.$data->tanggal)))}}" method="Post">
-                                            @csrf
-                                            @method('GET')
-                                            <button type="submit" class="text-blue-600 dark:text-blue-400">
-                                                Detail
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
+                                <tr class="odd:bg-white odd:dark:bg-gray-800 even:bg-gray-50 even:dark:bg-gray-700">
+                                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                        <p>
+                                            {{ $loop->iteration }}
+                                        </p>
+                                    </td>
+                                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                        <p>
+                                            {{ $data->tgl_transaksi->format('F Y') }}
+                                        </p>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex space-x-3">
+                                            <form
+                                                action="{{ url('jurnal/detail/' . date('Y-m-d', strtotime('1-' . $data->tanggal))) }}"
+                                                method="Post">
+                                                @csrf
+                                                @method('GET')
+                                                <button type="submit" class="text-blue-600 dark:text-blue-400">
+                                                    Detail
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
 
-                            </tr>
+                                </tr>
                             @empty
-                            <tr class="bg-white dark:bg-gray-800">
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    Empty
-                                </td>
-                            </tr>
+                                <tr class="bg-white dark:bg-gray-800">
+                                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                        Empty
+                                    </td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>

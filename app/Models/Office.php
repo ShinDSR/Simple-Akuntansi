@@ -16,4 +16,8 @@ class Office extends Model
         'email',
         'tgl_berdiri',
     ];
+
+    protected $casts = [
+        'tgl_berdiri' => 'datetime',
+    ];
 }

@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Jurnal;
 use App\Models\Akun;
+use App\Models\Jurnal;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class JurnalController extends Controller
 {
-    public function index(){
-        $list_jurnal = Jurnal::selectRaw("CONCAT(MONTH(tgl_transaksi), '-', YEAR(tgl_transaksi)) as tanggal")
-        ->distinct()
-        ->get();
+    public function index()
+    {
+        $jurnals = Jurnal::with('akun')
+            ->withCount('akun')
+            ->get();
 
-        $total_jurnal = $list_jurnal->count();
-        return view('jurnal.index', compact('list_jurnal', 'total_jurnal'));
+        // dd($jurnals->toArray());
+
+        return view('jurnal.index', [
+            'list_jurnal' => $jurnals,
+        ]);
     }
 
-    public function detail(Request $request, $tanggal){
-        if(empty($tanggal)) return redirect()->route('jurnal.index');
+    public function detail(Request $request, $tanggal)
+    {
+        if (empty($tanggal)) {
+            return redirect()->route('jurnal.index');
+        }
 
         $bulan = date('m', strtotime($tanggal));
         $tahun = date('Y', strtotime($tanggal));
@@ -49,16 +56,20 @@ class JurnalController extends Controller
         return view('jurnal.detail', compact('list_jurnal', 'periode', 'total_debet', 'total_kredit', 'saldo'));
     }
 
-    public function search(){
+    public function search()
+    {
         return view('jurnal.search');
     }
 
-    public function create(){
+    public function create()
+    {
         $akuns = Akun::all();
+
         return view('jurnal.create', compact('akuns'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
             'tgl_transaksi' => 'required|date',
             'akun_id' => [Rule::exists('akuns', 'id')],
@@ -73,15 +84,19 @@ class JurnalController extends Controller
             'keterangan' => $request->keterangan,
             'tipe_transaksi' => $request->tipe_transaksi,
         ]);
+
         return redirect()->route('jurnal.index')->with('success', 'Data jurnal berhasil ditambahkan');
     }
 
-    public function edit(Jurnal $jurnal){
+    public function edit(Jurnal $jurnal)
+    {
         $akuns = Akun::all();
+
         return view('jurnal.edit', compact('jurnal', 'akuns'));
     }
 
-    public function update(Request $request, Jurnal $jurnal){
+    public function update(Request $request, Jurnal $jurnal)
+    {
         $request->validate([
             'tgl_transaksi' => 'required|date',
             'akun_id' => [Rule::exists('akuns', 'id')],
@@ -101,8 +116,10 @@ class JurnalController extends Controller
         return redirect()->route('jurnal.index')->with('success', 'Data jurnal berhasil diubah');
     }
 
-    public function destroy(Jurnal $jurnal){
+    public function destroy(Jurnal $jurnal)
+    {
         $jurnal->delete();
+
         return redirect()->route('jurnal.index')->with('success', 'Data jurnal berhasil dihapus');
     }
 }

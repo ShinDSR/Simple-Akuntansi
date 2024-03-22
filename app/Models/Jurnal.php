@@ -17,6 +17,10 @@ class Jurnal extends Model
         'tipe_transaksi',
     ];
 
+    protected $casts = [
+        'tgl_transaksi' => 'datetime',
+    ];
+
     public function akun()
     {
         return $this->belongsTo(Akun::class);
