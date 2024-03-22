@@ -2,30 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Jurnal;
 use App\Models\Akun;
+use App\Models\Jurnal;
+use Illuminate\Http\Request;
 
 class NeracaController extends Controller
 {
     public function index()
     {
-
-        //jurnals = Jurnal::where()
-
-
-        $jurnas = Jurnal::selectRaw("CONCAT(MONTH(tgl_transaksi), '-', YEAR(tgl_transaksi)) as tanggal")
-            ->distinct()
+        $jurnals = Jurnal::where('tanggal_transaksi', now()->format('Y-m-d'))
             ->with('akun')
-            ->withCount('')
             ->get();
-        // $total_neraca = $list_neraca->count();
-        return view('neraca.index', compact('list_neraca', 'total_neraca'));
+
+        return view('neraca.index', [
+            'list_neraca' => $jurnals,
+        ]);
     }
 
     public function detail(Request $request, $tanggal, Akun $akun)
     {
-        if(empty($tanggal)) return redirect('neraca.index');
+        if (empty($tanggal)) {
+            return redirect('neraca.index');
+        }
 
         // $akuns = Akun::all()->count();
 
@@ -56,8 +54,6 @@ class NeracaController extends Controller
             ->with('akun')
             ->sum('nominal');
 
-        
-    
         // for($i = 1; $i <= $akuns; $i++){
 
         //     $daftar_buku[$i] = Jurnal::whereMonth('tgl_transaksi', $bulan)
@@ -103,7 +99,8 @@ class NeracaController extends Controller
         return view('neraca.detail', compact('total_saldo_debet', 'total_saldo_kredit', 'periode', 'daftar_buku', 'total_debet', 'total_kredit', 'akun'));
     }
 
-    public function print($tanggal){
-        
+    public function print($tanggal)
+    {
+
     }
 }
