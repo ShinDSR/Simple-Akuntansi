@@ -89,46 +89,43 @@
                                 </td>
                             </tr>
                             @endforelse
-                            
                         </tbody>
-                    </table>
-                    <table class="w-full text-sm text-left text-blue-500 dark:text-blue-400">
-                        <tfoot class="text-xs text-blue-700 uppercase bg-blue-300 dark:bg-blue-700 dark:text-blue-100">
+                        <tfoot class="text-blue-700 uppercase bg-blue-300 dark:bg-blue-700 dark:text-blue-100 text-base">
                             <tr>
-                                <th class="px-5 py-3 text-center">
+                                <th scope="col" class="px-6 py-3">
                                 </th>
-                                <th class="px-10 py-3 text-center">
-                                    JUMLAH
+                                <th scope="col" class="px-6 py-3">
                                 </th>
-                                <th class="px-5 py-3 text-center">
+                                <th scope="col" class="px-6 py-3">
+                                    Total
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-center">
-                                        Rp. {{ number_format($total_debet, 0, ',', '.') }},-
+                                <th scope="col" class="px-6 py-3">
+                                    Rp. {{ number_format($total_debet, 0, ',', '.') }},-
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-center">
-                                        Rp. {{ number_format($total_kredit, 0, ',', '.') }},-
+                                <th scope="col" class="px-6 py-3">
+                                    Rp. {{ number_format($total_kredit, 0, ',', '.') }},-
                                 </th>
                             </tr>
                             <tr>
-                                <th class="px-5 py-3 text-center">
+                                <th scope="col" class="px-6 py-3">
                                 </th>
-                                <th class="px-10 py-3 text-center">
-                                    SALDO
+                                <th scope="col" class="px-6 py-3">
                                 </th>
-                                <th class="px-5 py-3 text-center">
+                                <th scope="col" class="px-6 py-3">
+                                    Saldo
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-center">
-                                        Rp. {{ number_format($total_debet - $total_kredit, 0, ',', '.') }},-
+                                <th scope="col" class="px-6 py-3">
+                                    Rp. {{ number_format($saldo, 0, ',', '.') }},-
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-center">
+                                <th scope="col" class="px-6 py-3">
                                 </th>
                             </tr>
                         </tfoot>
                     </table>
-                    <br>
-                    
+                </div>
+                <div class="p-6 text-xl text-gray-900 dark:text-gray-100">
                     <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-4">
+                        <div>
                             <x-cancel-button href="{{ route('bukubesar.index') }}" />
                         </div>
                     </div>

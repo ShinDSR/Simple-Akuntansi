@@ -8,7 +8,11 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
-                
+                <div class="p-6 text-xl text-gray-900 dark:text-gray-100">
+                    <div class="flex items-center justify-between">
+
+                    </div>
+                </div>
 
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -50,7 +54,7 @@
                                         </form>
                                     </div>
                                 </td>
-                                
+
 
                             </tr>
                             @empty
@@ -62,13 +66,14 @@
                             @endforelse
                         </tbody>
                     </table>
-                    <br>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <x-cancel-button href="{{ route('bukubesar.index') }}" />
+                    
+                    <div class="p-6 text-xl text-gray-900 dark:text-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <x-cancel-button href="{{ route('bukubesar.index') }}" />
+                            </div>
                         </div>
                     </div>
-                    <br>
                 </div>
             </div>
         </div>

@@ -51,6 +51,8 @@ class BukuBesarController extends Controller
         
         $total_buku = $list_buku->count();
 
-        return view('bukubesar.detail', compact('list_buku', 'total_buku', 'periode', 'total_debet', 'total_kredit', 'akun'));
+        $saldo = $total_debet - $total_kredit;
+
+        return view('bukubesar.detail', compact('list_buku', 'total_buku', 'periode', 'total_debet', 'total_kredit', 'akun', 'saldo'));
     }
 }
