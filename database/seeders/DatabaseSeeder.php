@@ -27,15 +27,45 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Akun::create([
-            'kode_akun' => 'KA001',
+            'kode_akun' => '100',
             'user_id' => 1,
             'nama_akun' => 'Kas',
         ]);
 
         Akun::create([
-            'kode_akun' => 'KA002',
+            'kode_akun' => '110',
             'user_id' => 1,
-            'nama_akun' => 'Bank',
+            'nama_akun' => 'Piutang Usaha',
+        ]);
+
+        Akun::create([
+            'kode_akun' => '120',
+            'user_id' => 1,
+            'nama_akun' => 'Perlengkapan',
+        ]);
+
+        Akun::create([
+            'kode_akun' => '200',
+            'user_id' => 1,
+            'nama_akun' => 'Utang Usaha',
+        ]);
+
+        Akun::create([
+            'kode_akun' => '210',
+            'user_id' => 1,
+            'nama_akun' => 'Modal',
+        ]);
+
+        Akun::create([
+            'kode_akun' => '300',
+            'user_id' => 1,
+            'nama_akun' => 'Pendapatan',
+        ]);
+
+        Akun::create([
+            'kode_akun' => '400',
+            'user_id' => 1,
+            'nama_akun' => 'Beban',
         ]);
 
         Jurnal::create([

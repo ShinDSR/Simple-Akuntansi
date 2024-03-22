@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     
     //Neraca
     Route::get('/neraca', [NeracaController::class, 'index'])->name('neraca.index');
+    Route::get('/neraca/detail/{tanggal}', [NeracaController::class, 'detail'])->name('neraca.detail');
 });
 
 require __DIR__.'/auth.php';
