@@ -30,54 +30,29 @@
                         </thead>
                         <tbody>
                             <?php $no = 1; ?>
-                            @foreach ($daftar_buku as $row)
+                            @foreach ($jurnal_details as $jurnal)
                             <tr class="odd:bg-white odd:dark:bg-gray-800 even:bg-gray-50 even:dark:bg-gray-700">
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     {{ $no++ }}
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    {{ $row->akun->kode_akun }}
+                                    {{ $jurnal->akun->kode_akun }}
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    {{ $row->akun->nama_akun }}
+                                    {{ $jurnal->akun->nama_akun }}
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    Rp. {{ number_format($row['debet'], 0, ',') }},-
+                                    {{ $jurnal->total_debet }}
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                    Rp. {{ number_format($row['kredit'], 0, ',') }},-
+                                    {{ $jurnal->nominal }}
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
-                        <!-- <tfoot class="text-blue-700 uppercase bg-blue-300 dark:bg-blue-700 dark:text-blue-100 text-base">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Total
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Rp. {{ number_format($total_saldo_debet, 0, ',', '.') }},-
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Rp. {{ number_format($total_saldo_kredit, 0, ',', '.') }},-
-                                </th>
-                                @if($total_saldo_debet == $total_saldo_kredit)
-                                <th scope="col" class="px-6 py-3 text-green-700 uppercase bg-green-400 dark:bg-green-600 dark:text-green-200">
-                                    BALANCE
-                                </th>
-                                @else
-                                <th scope="col" class="px-6 py-3 text-red-700 uppercase bg-red-400 dark:bg-red-600 dark:text-red-200">
-                                    UNBALANCE
-                                </th>
-                                @endif
-                            </tr>
-                        </tfoot> -->
+
                     </table>
                 </div>
 

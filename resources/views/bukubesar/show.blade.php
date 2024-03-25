@@ -31,7 +31,7 @@
                         </thead>
                         <tbody>
                             <?php $no = 1; ?>
-                            @forelse ($list_buku as $data)
+                            @forelse ($jurnal as $periode => $jurnals)
                             <tr class="odd:bg-white odd:dark:bg-gray-800 even:bg-gray-50 even:dark:bg-gray-700">
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
@@ -40,22 +40,20 @@
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
-                                        {{ date('F Y', strtotime('1-'.$data->tanggal)) }}
+                                        {{$periode}}
                                     </p>
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-3">
-                                        <form action="{{ url('bukubesar/detail/'.$akun->id.'/'.date('Y-m-d', strtotime('1-'.$data->tanggal)))}}" method="Post">
+                                        <form action="{{ route('bukubesar.detail', [$akun->id, $periode]) }}" method="Post">
                                             @csrf
                                             @method('GET')
-                                            <button type="submit" class="text-blue-600 dark:text-blue-400">
+                                            <button type="submit" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200">
                                                 Detail
                                             </button>
                                         </form>
                                     </div>
                                 </td>
-
-
                             </tr>
                             @empty
                             <tr class="bg-white dark:bg-gray-800">

@@ -55,7 +55,7 @@
                         </thead>
                         <tbody>
                             <?php $no = 1; ?>
-                            @forelse ($list_jurnal as $data)
+                            @forelse ($jurnals as $jurnal)
                             <tr class="odd:bg-white odd:dark:bg-gray-800 even:bg-gray-50 even:dark:bg-gray-700">
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
@@ -64,23 +64,23 @@
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
-                                        {{ $data->tgl_transaksi }}
+                                        {{ $jurnal->tgl_transaksi }}
                                     </p>
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
-                                        {{ $data->akun->kode_akun }}
+                                        {{ $jurnal->akun->kode_akun }}
                                     </p>
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
-                                        {{ $data->akun->nama_akun }}
+                                        {{ $jurnal->akun->nama_akun }}
                                     </p>
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
-                                        @if ($data->tipe_transaksi == 'd')
-                                        Rp. {{ number_format($data->nominal, 0, ',', '.') }},-
+                                        @if ($jurnal->tipe_transaksi == 'd')
+                                        Rp. {{ number_format($jurnal->nominal, 0, ',', '.') }},-
                                         @else
                                         -
                                         @endif
@@ -88,8 +88,8 @@
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
-                                        @if ($data->tipe_transaksi == 'k')
-                                        Rp. {{ number_format($data->nominal, 0, ',', '.') }},-
+                                        @if ($jurnal->tipe_transaksi == 'k')
+                                        Rp. {{ number_format($jurnal->nominal, 0, ',', '.') }},-
                                         @else
                                         -
                                         @endif
@@ -97,14 +97,14 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-3">
-                                        <form action="{{ route('jurnal.edit', $data) }}" method="Post">
+                                        <form action="{{ route('jurnal.edit', $jurnal) }}" method="Post">
                                             @csrf
                                             @method('GET')
                                             <button type="submit" class="text-green-600 dark:text-green-400">
                                                 Edit
                                             </button>
                                         </form>
-                                        <form action="{{ route('jurnal.destroy', $data) }}" method="Post">
+                                        <form action="{{ route('jurnal.destroy', $jurnal) }}" method="Post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 dark:text-red-400">

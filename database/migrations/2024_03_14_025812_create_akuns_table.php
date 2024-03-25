@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('akuns', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('kode_akun', 5)->unique();
+            $table->string('kode_akun', 3)->unique();
             $table->string('nama_akun', 20);
             $table->timestamps();
         });

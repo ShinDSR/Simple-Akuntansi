@@ -14,12 +14,23 @@ class BukuBesarController extends Controller
     }
 
     public function show(Akun $akun){
-        $list_buku = Jurnal::selectRaw("CONCAT(MONTH(tgl_transaksi), '-', YEAR(tgl_transaksi)) as tanggal")
-            ->where('akun_id', $akun->id)
-            ->distinct()
-            ->get();
-        $total_buku = $list_buku->count();
-        return view('bukubesar.show', compact('list_buku', 'total_buku', 'akun'));
+        // $list_buku = Jurnal::selectRaw("CONCAT(MONTH(tgl_transaksi), '-', YEAR(tgl_transaksi)) as tanggal")
+        //     ->where('akun_id', $akun->id)
+        //     ->distinct()
+        //     ->get();
+        // $total_buku = $list_buku->count();
+        // return view('bukubesar.show', compact('list_buku', 'total_buku', 'akun'));
+
+        $jurnals = Jurnal::where('akun_id', $akun->id)
+            ->get()
+            ->groupBy(function ($val) {
+                return date('F Y', strtotime($val->tgl_transaksi));
+            });
+
+        return view('bukubesar.show', [
+            'jurnal' => $jurnals,
+            'akun' => $akun,
+        ]);
     }
 
     public function detail(Akun $akun, $tanggal){
@@ -29,7 +40,7 @@ class BukuBesarController extends Controller
         $tahun = date('Y', strtotime($tanggal));
         $periode = date('F Y', strtotime($tanggal));
 
-        $list_buku = Jurnal::where('akun_id', $akun->id)
+        $jurnals = Jurnal::where('akun_id', $akun->id)
             ->whereMonth('tgl_transaksi', $bulan)
             ->whereYear('tgl_transaksi', $tahun)
             ->orderBy('tgl_transaksi', 'asc')
@@ -49,10 +60,10 @@ class BukuBesarController extends Controller
             ->orderBy('tgl_transaksi', 'asc')
             ->sum('nominal');
         
-        $total_buku = $list_buku->count();
+        $total_buku = $jurnals->count();
 
         $saldo = $total_debet - $total_kredit;
 
-        return view('bukubesar.detail', compact('list_buku', 'total_buku', 'periode', 'total_debet', 'total_kredit', 'akun', 'saldo'));
+        return view('bukubesar.detail', compact('jurnals', 'total_buku', 'periode', 'total_debet', 'total_kredit', 'akun', 'saldo'));
     }
 }

@@ -8,9 +8,9 @@ use App\Models\Akun;
 class AkunController extends Controller
 {
     public function index(){
-        $list_akun = Akun::all();
-        $total_akun = $list_akun->count();
-        return view('akun.index', compact('list_akun', 'total_akun'));
+        $akuns = Akun::all();
+        $total_akun = $akuns->count();
+        return view('akun.index', compact('akuns', 'total_akun'));
     }
 
     public function create(){
@@ -19,7 +19,7 @@ class AkunController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'kode_akun' => 'required|max:5',
+            'kode_akun' => 'required|max:3|min:3|unique:akuns,kode_akun',
             'nama_akun' => 'required|max:20',
         ]);
         Akun::create([
@@ -37,7 +37,7 @@ class AkunController extends Controller
 
     public function update(Request $request, Akun $akun){
         $request->validate([
-            'kode_akun' => 'required|max:5',
+            'kode_akun' => 'required|max:3|min:3|unique:akuns,kode_akun,'.$akun->id,
             'nama_akun' => 'required|max:20',
         ]);
         $akun->update([

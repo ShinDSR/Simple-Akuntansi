@@ -45,7 +45,7 @@
                         </thead>
                         <tbody>
                             <?php $no = 1; ?>
-                            @forelse ($list_buku as $data)
+                            @forelse ($jurnals as $jurnal)
                             <tr class="odd:bg-white odd:dark:bg-gray-800 even:bg-gray-50 even:dark:bg-gray-700">
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
@@ -54,18 +54,18 @@
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
-                                        {{ $data->tgl_transaksi }}
+                                        {{ $jurnal->tgl_transaksi }}
                                     </p>
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
-                                        {{ $data->keterangan }}
+                                        {{ $jurnal->keterangan }}
                                     </p>
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
-                                        @if ($data->tipe_transaksi == 'd')
-                                            Rp. {{ number_format($data->nominal, 0, ',', '.') }},-
+                                        @if ($jurnal->tipe_transaksi == 'd')
+                                            Rp. {{ number_format($jurnal->nominal, 0, ',', '.') }},-
                                         @else
                                             -
                                         @endif
@@ -73,8 +73,8 @@
                                 </td>
                                 <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     <p>
-                                        @if ($data->tipe_transaksi == 'k')
-                                            Rp. {{ number_format($data->nominal, 0, ',', '.') }},-
+                                        @if ($jurnal->tipe_transaksi == 'k')
+                                            Rp. {{ number_format($jurnal->nominal, 0, ',', '.') }},-
                                         @else
                                             -
                                         @endif

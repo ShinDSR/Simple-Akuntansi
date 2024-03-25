@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Akun;
 use App\Models\Jurnal;
 use Illuminate\Http\Request;
@@ -12,13 +13,15 @@ class JurnalController extends Controller
     public function index()
     {
         $jurnals = Jurnal::with('akun')
-            ->withCount('akun')
-            ->get();
-
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->tgl_transaksi)
+                    ->format('F Y');
+            });
         // dd($jurnals->toArray());
 
         return view('jurnal.index', [
-            'list_jurnal' => $jurnals,
+            'jurnal' => $jurnals,
         ]);
     }
 
@@ -32,7 +35,7 @@ class JurnalController extends Controller
         $tahun = date('Y', strtotime($tanggal));
         $periode = date('F Y', strtotime($tanggal));
 
-        $list_jurnal = Jurnal::whereMonth('tgl_transaksi', $bulan)
+        $jurnals = Jurnal::whereMonth('tgl_transaksi', $bulan)
             ->whereYear('tgl_transaksi', $tahun)
             ->orderBy('tgl_transaksi', 'asc')
             ->with('akun')
@@ -53,7 +56,7 @@ class JurnalController extends Controller
         // $total_jurnal = $list_jurnal->count();
         $saldo = $total_debet - $total_kredit;
 
-        return view('jurnal.detail', compact('list_jurnal', 'periode', 'total_debet', 'total_kredit', 'saldo'));
+        return view('jurnal.detail', compact('jurnals', 'periode', 'total_debet', 'total_kredit', 'saldo'));
     }
 
     public function search()

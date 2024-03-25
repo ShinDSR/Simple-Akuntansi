@@ -2,105 +2,100 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Akun;
 use App\Models\Jurnal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NeracaController extends Controller
 {
     public function index()
     {
-        $jurnals = Jurnal::where('tanggal_transaksi', now()->format('Y-m-d'))
-            ->with('akun')
-            ->get();
-
+        $jurnals = Jurnal::with('akun')
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->tgl_transaksi)
+                    ->format('F Y');
+            });
         return view('neraca.index', [
-            'list_neraca' => $jurnals,
+            'jurnal' => $jurnals,
         ]);
     }
 
-    public function detail(Request $request, $tanggal, Akun $akun)
-    {
-        if (empty($tanggal)) {
-            return redirect('neraca.index');
-        }
+    // public function detail(Request $request, $tanggal)
+    // {
+    //     if (empty($tanggal)) {
+    //         return redirect()->route('neraca.index');
+    //     }
+    
+    //     $bulan = date('m', strtotime($tanggal));
+    //     $tahun = date('Y', strtotime($tanggal));
+    //     $periode = date('F Y', strtotime($tanggal));
+    
+    //     $akuns = Akun::all();
+    
+    //     $jurnals = Jurnal::select('akun_id', DB::raw('MAX(id) as id'))
+    //         ->whereMonth('tgl_transaksi', $bulan)
+    //         ->whereYear('tgl_transaksi', $tahun)
+    //         ->groupBy('akun_id')
+    //         ->orderBy('akun_id', 'asc')
+    //         ->get();
+    
+    //     $jurnal_ids = $jurnals->pluck('id');
+    
+    //     $jurnal_details = Jurnal::whereIn('id', $jurnal_ids)
+    //         ->with('akun')
+    //         ->get();
+    
+    //     $total_debet = Jurnal::where('tipe_transaksi', 'd')
+    //         ->whereIn('id', $jurnal_ids)
+    //         ->sum('nominal');
+    
+    //     $total_kredit = Jurnal::where('tipe_transaksi', 'k')
+    //         ->whereIn('id', $jurnal_ids)
+    //         ->sum('nominal');
+    
+    //     $saldo = $total_debet - $total_kredit;
+    
+    //     return view('neraca.detail', compact('jurnal_details', 'periode', 'total_debet', 'total_kredit', 'saldo'));
+    // }
 
-        // $akuns = Akun::all()->count();
+    // public function detail(Request $request, $tanggal)
+    // {
+    //     if (empty($tanggal)) {
+    //         return redirect()->route('neraca.index');
+    //     }
 
-        $bulan = date('m', strtotime($tanggal));
-        $tahun = date('Y', strtotime($tanggal));
-        $periode = date('F Y', strtotime($tanggal));
+    //     $bulan = date('m', strtotime($tanggal));
+    //     $tahun = date('Y', strtotime($tanggal));
+    //     $periode = date('F Y', strtotime($tanggal));
 
-        $total_saldo_debet = 0;
-        $total_saldo_kredit = 0;
+    //     $akuns = Akun::all();
 
-        $daftar_buku = Jurnal::whereMonth('tgl_transaksi', $bulan)
-            ->whereYear('tgl_transaksi', $tahun)
-            ->orderBy('tgl_transaksi', 'asc')
-            ->with('akun')
-            ->get();
+    //     $jurnals = Jurnal::whereMonth('tgl_transaksi', $bulan)
+    //         ->whereYear('tgl_transaksi', $tahun)
+    //         ->with('akun')
+    //         ->groupBy('akun_id')
+    //         ->orderBy('akun_id', 'asc')
+    //         ->get();
+    //     $total_debet = Jurnal::where('tipe_transaksi', 'd')
+    //         ->whereMonth('tgl_transaksi', $bulan)
+    //         ->whereYear('tgl_transaksi', $tahun)
+    //         ->with('akun')
+    //         ->orderBy('akun_id', 'asc')
+    //         ->sum('nominal');
+    //     $total_kredit = Jurnal::where('tipe_transaksi', 'k')
+    //         ->whereMonth('tgl_transaksi', $bulan)
+    //         ->whereYear('tgl_transaksi', $tahun)
+    //         ->with('akun')
+    //         ->orderBy('akun_id', 'asc')
+    //         ->sum('nominal');
 
-        $total_debet = Jurnal::where('tipe_transaksi', 'd')
-            ->whereMonth('tgl_transaksi', $bulan)
-            ->whereYear('tgl_transaksi', $tahun)
-            ->orderBy('tgl_transaksi', 'asc')
-            ->with('akun')
-            ->sum('nominal');
+    //     $saldo = $total_debet - $total_kredit;
 
-        $total_kredit = Jurnal::where('tipe_transaksi', 'k')
-            ->whereMonth('tgl_transaksi', $bulan)
-            ->whereYear('tgl_transaksi', $tahun)
-            ->orderBy('tgl_transaksi', 'asc')
-            ->with('akun')
-            ->sum('nominal');
+    //     return view('neraca.detail', compact('jurnals', 'periode', 'total_debet', 'total_kredit', 'saldo'));
 
-        // for($i = 1; $i <= $akuns; $i++){
+    // }
 
-        //     $daftar_buku[$i] = Jurnal::whereMonth('tgl_transaksi', $bulan)
-        //         ->whereYear('tgl_transaksi', $tahun)
-        //         ->orderBy('tgl_transaksi', 'asc')
-        //         ->where('akun_id', $i)
-        //         ->get();
-
-        //     $total_debet[$i] = Jurnal::where('tipe_transaksi', 'd')
-        //         ->whereMonth('tgl_transaksi', $bulan)
-        //         ->whereYear('tgl_transaksi', $tahun)
-        //         ->orderBy('tgl_transaksi', 'asc')
-        //         ->where('akun_id', $i)
-        //         ->sum('nominal');
-
-        //     $total_kredit[$i] = Jurnal::where('tipe_transaksi', 'k')
-        //         ->whereMonth('tgl_transaksi', $bulan)
-        //         ->whereYear('tgl_transaksi', $tahun)
-        //         ->orderBy('tgl_transaksi', 'asc')
-        //         ->where('akun_id', $i)
-        //         ->sum('nominal');
-
-        //     $akun[$i] = Akun::findOrFail($i);
-
-        //     if( substr($akun[$i]->kode_akun, 0, 1) === '1' ||  substr($akun[$i]->kode_akun, 0, 1) === '4'){
-        //         $debet[$i] = $total_debet[$i] - $total_kredit[$i];
-        //         $kredit[$i] = 0;
-        //     }elseif( substr($akun[$i]->kode_akun, 0, 1) === '2' ||  substr($akun[$i]->kode_akun, 0, 1) === '3' || substr($akun[$i]->kode_akun, 0, 1) === '5'){
-        //         $kredit[$i] = $total_kredit[$i] - $total_debet[$i];
-        //         $debet[$i] = 0;
-        //     }
-
-        //     $data[$i] = [
-        //         'kode_akun' => $akun[$i]->kode_akun,
-        //         'nama_akun' => $akun[$i]->nama_akun,
-        //         'debet' => $debet[$i],
-        //         'kredit' => $kredit[$i],
-        //     ];
-
-        //     $total_saldo_debet += $data[$i]['debet'];
-        //     $total_saldo_kredit += $data[$i]['kredit'];
-        // }
-        return view('neraca.detail', compact('total_saldo_debet', 'total_saldo_kredit', 'periode', 'daftar_buku', 'total_debet', 'total_kredit', 'akun'));
-    }
-
-    public function print($tanggal)
-    {
-
-    }
 }
