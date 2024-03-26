@@ -35,10 +35,10 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-3">
-                                        <form action="{{ route('neraca.detail', $periode) }}" method="Post">
+                                        <form action="{{ route('neraca.detail', $periode)}}" method="Post">
                                             @csrf
                                             @method('GET')
-                                            <button type="submit" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Detail</button>
+                                            <button type="submit" class="text-blue-600 dark:text-blue-400">Detail</button>
                                         </form>
                                     </div>
                                 </td>

@@ -12,8 +12,7 @@ class JurnalController extends Controller
 {
     public function index()
     {
-        $jurnals = Jurnal::with('akun')
-            ->get()
+        $jurnals = Jurnal::get()
             ->groupBy(function ($val) {
                 return Carbon::parse($val->tgl_transaksi)
                     ->format('F Y');
