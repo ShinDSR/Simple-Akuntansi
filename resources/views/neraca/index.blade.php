@@ -45,6 +45,11 @@
                                             @method('GET')
                                             <button type="submit" class="text-blue-600 dark:text-blue-400">Detail</button>
                                         </form>
+                                        <form action="{{ route('neraca.print', $periode)}}" method="Post">
+                                            @csrf
+                                            @method('GET')
+                                            <button type="submit" class="text-green-600 dark:text-green-400">Print</button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
