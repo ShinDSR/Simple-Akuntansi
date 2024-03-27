@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('offices', function (Blueprint $table) {
             $table->id();
-            $table->string('nama',30);
+            $table->string('nama_perusahaan',30);
             $table->string('alamat', 50);
-            $table->string('no_telp', 15);
+            $table->string('no_telp', 13);
             $table->string('email', 30);
             $table->date('tgl_berdiri');
             $table->timestamps();

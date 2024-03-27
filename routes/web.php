@@ -35,8 +35,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
 
+    //Office
     Route::get('/office', [OfficeController::class, 'index'])->name('office.index');
-    Route::get('/office/edit', [OfficeController::class, 'edit'])->name('office.edit');
+    Route::get('/office/create', [OfficeController::class, 'create'])->name('office.create');
+    Route::post('/office', [OfficeController::class, 'store'])->name('office.store');
+    Route::get('/office/{office}/edit', [OfficeController::class, 'edit'])->name('office.edit');
+    Route::patch('/office/{office}', [OfficeController::class, 'update'])->name('office.update');
     
     //Akun
     Route::get('/akun', [AkunController::class, 'index'])->name('akun.index');
@@ -58,7 +62,7 @@ Route::middleware('auth')->group(function () {
 
     //Buku Besar
     Route::get('/bukubesar', [BukuBesarController::class, 'index'])->name('bukubesar.index');
-    Route::get('/bukubesar/{akun}', [BukuBesarController::class, 'show'])->name('bukubesar.show');
+    Route::get('/bukubesar/{akun}', [BukuBesarController::class, 'periode'])->name('bukubesar.periode');
     Route::get('/bukubesar/detail/{akun}/{tanggal}', [BukuBesarController::class, 'detail'])->name('bukubesar.detail');
     
     //Neraca

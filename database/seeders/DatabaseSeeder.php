@@ -9,6 +9,7 @@ use App\Models\Jurnal;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Models\User;
+use App\Models\Office;
 
 class DatabaseSeeder extends Seeder
 {
@@ -74,6 +75,14 @@ class DatabaseSeeder extends Seeder
             'nominal' => 100000,
             'keterangan' => 'Pembelian Buku',
             'tipe_transaksi' => 'd',
+        ]);
+
+        Office::create([
+            'nama_perusahaan' => 'PT. Maju Mundur',
+            'alamat' => 'Jl. Raya No. 1',
+            'no_telp' => '08123456789',
+            'email' => 'mamu@gmail.com',
+            'tgl_berdiri' => '2022-03-14',
         ]);
     }
 }

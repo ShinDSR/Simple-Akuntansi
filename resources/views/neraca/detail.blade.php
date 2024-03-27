@@ -25,7 +25,7 @@
                                 <th scope="col" class="px-6 py-3">Akun</th>
                                 <th scope="col" class="px-6 py-3">Debet</th>
                                 <th scope="col" class="px-6 py-3">Kredit</th>
-                                <th scope="col" class="px-6 py-3">Result</th>
+                                <th scope="col" class="px-6 py-3"></th>
                             </tr>
                         </thead>
                         <tbody>

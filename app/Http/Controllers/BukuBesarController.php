@@ -13,21 +13,14 @@ class BukuBesarController extends Controller
         return view('bukubesar.index', compact('akuns'));
     }
 
-    public function show(Akun $akun){
-        // $list_buku = Jurnal::selectRaw("CONCAT(MONTH(tgl_transaksi), '-', YEAR(tgl_transaksi)) as tanggal")
-        //     ->where('akun_id', $akun->id)
-        //     ->distinct()
-        //     ->get();
-        // $total_buku = $list_buku->count();
-        // return view('bukubesar.show', compact('list_buku', 'total_buku', 'akun'));
-
+    public function periode(Akun $akun){
         $jurnals = Jurnal::where('akun_id', $akun->id)
             ->get()
             ->groupBy(function ($val) {
                 return date('F Y', strtotime($val->tgl_transaksi));
             });
 
-        return view('bukubesar.show', [
+        return view('bukubesar.periode', [
             'jurnal' => $jurnals,
             'akun' => $akun,
         ]);

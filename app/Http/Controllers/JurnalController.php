@@ -58,11 +58,6 @@ class JurnalController extends Controller
         return view('jurnal.detail', compact('jurnals', 'periode', 'total_debet', 'total_kredit', 'saldo'));
     }
 
-    public function search()
-    {
-        return view('jurnal.search');
-    }
-
     public function create()
     {
         $akuns = Akun::all();

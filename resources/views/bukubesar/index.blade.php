@@ -12,7 +12,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                         @forelse ($akuns as $data)
                             <div class="m-2">
-                                <a href="{{ route('bukubesar.show', $data) }}" class="inline-block w-full px-6 py-3 bg-blue-500 text-white rounded-lg text-center hover:bg-blue-600 transition duration-300">
+                                <a href="{{ route('bukubesar.periode', $data) }}" class="inline-block w-full px-6 py-3 bg-blue-500 text-white rounded-lg text-center hover:bg-blue-600 transition duration-300">
                                     {{ $data->nama_akun }}
                                 </a>
                             </div>
