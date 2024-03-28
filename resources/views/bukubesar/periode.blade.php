@@ -48,7 +48,7 @@
                                         <form action="{{ route('bukubesar.detail', [$akun->id, $periode]) }}" method="Post">
                                             @csrf
                                             @method('GET')
-                                            <button type="submit" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200">
+                                            <button type="submit" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
                                                 Detail
                                             </button>
                                         </form>

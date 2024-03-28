@@ -60,7 +60,7 @@
                                         <form action="{{ route('jurnal.detail', $periode)}}" method="Post">
                                             @csrf
                                             @method('GET')
-                                            <button type="submit" class="text-blue-600 dark:text-blue-400">
+                                            <button type="submit" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
                                                 Detail
                                             </button>
                                         </form>

@@ -20,10 +20,19 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'name' => 'Admin',
-            'email' => 'admin01@gmail.com',
+            'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
             'password' => bcrypt('password'),
-            // 'is_admin' => true,
+            'is_admin' => true,
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::create([
+            'name' => 'User',
+            'email' => 'user01@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('password'),
+            'is_admin' => false,
             'remember_token' => Str::random(10),
         ]);
 

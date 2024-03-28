@@ -43,14 +43,18 @@
                                         <form action="{{ route('laporan.print', $periode)}}" method="Post">
                                             @csrf
                                             @method('GET')
-                                            <button type="submit" class="text-green-600 dark:text-green-400">Print</button>
+                                            <button type="submit" class="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300">
+                                                Print
+                                            </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
                             @empty
                             <tr class="bg-white dark:bg-gray-800">
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">Empty</td>
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                    Empty
+                                </td>
                             </tr>
                             @endforelse
                         </tbody>

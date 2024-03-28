@@ -72,14 +72,14 @@
                                         <form action="{{ route('akun.edit', $akun) }}" method="Post">
                                             @csrf
                                             @method('GET')
-                                            <button type="submit" class="text-green-600 dark:text-green-400">
+                                            <button type="submit" class="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300">
                                                 Edit
                                             </button>
                                         </form>
                                         <form action="{{ route('akun.destroy', $akun) }}" method="Post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 dark:text-red-400">
+                                            <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">
                                                 Delete
                                             </button>
                                         </form>
