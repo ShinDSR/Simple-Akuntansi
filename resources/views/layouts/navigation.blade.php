@@ -30,6 +30,9 @@
                     <x-nav-link :href="route('neraca.index')" :active="request()->routeIs('neraca.*')">
                         {{ __('Neraca') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan.*')">
+                        {{ __('Laporan') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                         {{ __('User') }}
                     </x-nav-link>
@@ -102,6 +105,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('neraca.index')" :active="request()->routeIs('neraca.*')">
                 {{ __('Neraca') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan.*')">
+                {{ __('Laporan') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                 {{ __('User') }}

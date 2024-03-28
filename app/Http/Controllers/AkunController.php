@@ -8,7 +8,7 @@ use App\Models\Akun;
 class AkunController extends Controller
 {
     public function index(){
-        $akuns = Akun::all();
+        $akuns = Akun::orderBy('kode_akun', 'asc')->get();
         $total_akun = $akuns->count();
         return view('akun.index', compact('akuns', 'total_akun'));
     }

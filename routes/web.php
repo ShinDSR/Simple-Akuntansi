@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BukuBesarController;
 use App\Http\Controllers\NeracaController;
+use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,6 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/neraca', [NeracaController::class, 'index'])->name('neraca.index');
     Route::get('/neraca/detail/{tanggal}', [NeracaController::class, 'detail'])->name('neraca.detail');
     Route::get('/neraca/print/{tanggal}', [NeracaController::class, 'print'])->name('neraca.print');
+
+    //Laporan
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/print/{tanggal}', [LaporanController::class, 'print'])->name('laporan.print');
 });
 
 require __DIR__.'/auth.php';

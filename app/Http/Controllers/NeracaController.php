@@ -47,6 +47,7 @@ class NeracaController extends Controller
                 \DB::raw('IFNULL(SUM(CASE WHEN jurnals.tipe_transaksi = "k" THEN jurnals.nominal ELSE 0 END), 0) AS total_kredit')
             )
             ->groupBy('akuns.id', 'akuns.kode_akun', 'akuns.nama_akun')
+            ->orderBy('akuns.kode_akun','asc')
             ->get();
 
         $data = [];
@@ -55,12 +56,12 @@ class NeracaController extends Controller
 
         foreach ($jurnals as $jurnal) {
             // Menghitung saldo sesuai dengan kode akun
-            if (substr($jurnal->kode_akun, 0, 1) === '1' || substr($jurnal->kode_akun, 0, 1) === '2' || substr($jurnal->kode_akun, 0, 1) === '4' || substr($jurnal->kode_akun, 0, 1) === '5') {
-                $aktiva = $jurnal->total_debet;
-                $pasiva = $jurnal->total_kredit;
-            } elseif (substr($jurnal->kode_akun, 0, 1) === '3' || substr($jurnal->kode_akun, 0, 1) === '6' || substr($jurnal->kode_akun, 0, 1) === '7' || substr($jurnal->kode_akun, 0, 1) === '8') {
-                $pasiva = $jurnal->total_kredit;
-                $aktiva = $jurnal->total_debet;
+            if (substr($jurnal->kode_akun, 0, 1) === '1' || substr($jurnal->kode_akun, 0, 1) === '2' || substr($jurnal->kode_akun, 0, 1) === '4' || substr($jurnal->kode_akun, 0, 1) === '5' || substr($jurnal->kode_akun, 0, 1) === '7') {
+                $aktiva = $jurnal->total_debet - $jurnal->total_kredit;
+                $pasiva = 0;
+            } elseif (substr($jurnal->kode_akun, 0, 1) === '3' || substr($jurnal->kode_akun, 0, 1) === '6' || substr($jurnal->kode_akun, 0, 1) === '8') {
+                $pasiva = $jurnal->total_kredit - $jurnal->total_debet;
+                $aktiva = 0;
             }
 
             // Menyimpan data akun
@@ -113,9 +114,9 @@ class NeracaController extends Controller
         $pdf->Cell(40, 10, 'KODE AKUN', 1, 0, 'C');
         $pdf->Cell(80, 10, 'NAMA AKUN', 1, 0, 'C'); // Increased width to fit landscape mode
         $pdf->Cell(71, 10, 'AKTIVA', 1, 0, 'C'); // Increased width to fit landscape mode
-        $pdf->Cell(71, 10, 'PASIVA', 1, 1, 'C'); // Increased width to fit landscape mode
+        $pdf->Cell(71, 10, 'PASIVA', 1, 0, 'C'); // Increased width to fit landscape mode
 
-        // $pdf->Ln(); 
+        $pdf->Ln(); 
 
         $jurnals = Akun::leftJoin('jurnals', function ($join) use ($bulan, $tahun) {
             $join->on('akuns.id', '=', 'jurnals.akun_id')
@@ -130,6 +131,7 @@ class NeracaController extends Controller
                 \DB::raw('IFNULL(SUM(CASE WHEN jurnals.tipe_transaksi = "k" THEN jurnals.nominal ELSE 0 END), 0) AS total_kredit')
             )
             ->groupBy('akuns.id', 'akuns.kode_akun', 'akuns.nama_akun')
+            ->orderBy('akuns.kode_akun','asc')
             ->get();
 
         $data = [];
@@ -138,12 +140,12 @@ class NeracaController extends Controller
 
         foreach ($jurnals as $jurnal) {
             // Menghitung saldo sesuai dengan kode akun
-            if (substr($jurnal->kode_akun, 0, 1) === '1' || substr($jurnal->kode_akun, 0, 1) === '2' || substr($jurnal->kode_akun, 0, 1) === '4' || substr($jurnal->kode_akun, 0, 1) === '5') {
-                $aktiva = $jurnal->total_debet;
-                $pasiva = $jurnal->total_kredit;
-            } elseif (substr($jurnal->kode_akun, 0, 1) === '3' || substr($jurnal->kode_akun, 0, 1) === '6' || substr($jurnal->kode_akun, 0, 1) === '7' || substr($jurnal->kode_akun, 0, 1) === '8') {
-                $pasiva = $jurnal->total_kredit;
-                $aktiva = $jurnal->total_debet;
+            if (substr($jurnal->kode_akun, 0, 1) === '1' || substr($jurnal->kode_akun, 0, 1) === '2' || substr($jurnal->kode_akun, 0, 1) === '4' || substr($jurnal->kode_akun, 0, 1) === '5' || substr($jurnal->kode_akun, 0, 1) === '7') {
+                $aktiva = $jurnal->total_debet - $jurnal->total_kredit;
+                $pasiva = 0;
+            } elseif (substr($jurnal->kode_akun, 0, 1) === '3' || substr($jurnal->kode_akun, 0, 1) === '6' || substr($jurnal->kode_akun, 0, 1) === '8') {
+                $pasiva = $jurnal->total_kredit - $jurnal->total_debet;
+                $aktiva = 0;
             }
 
             // Menyimpan data akun
@@ -163,20 +165,34 @@ class NeracaController extends Controller
             $pdf->Cell(40, 10, $jurnal->kode_akun, 1, 0, 'C');
             $pdf->Cell(80, 10, $jurnal->nama_akun, 1, 0, 'L'); // Adjusted alignment
             $pdf->Cell(71, 10, "Rp. " . number_format($aktiva, 0, ',', '.'), 1, 0, 'R'); // Adjusted alignment and removed extra parameter
-            $pdf->Cell(71, 10, "Rp. " . number_format($pasiva, 0, ',', '.'), 1, 1, 'R'); // Adjusted alignment and removed extra parameter
+            $pdf->Cell(71, 10, "Rp. " . number_format($pasiva, 0, ',', '.'), 1, 0, 'R'); // Adjusted alignment and removed extra parameter
+            $pdf->Ln();
         }
 
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(135, 10, 'TOTAL', 1, 0, 'C'); // Adjusted width
         $pdf->Cell(71, 10, "Rp. " . number_format($total_saldo_aktiva, 0, ',', '.'), 1, 0, 'R'); // Adjusted alignment and removed extra parameter
-        $pdf->Cell(71, 10, "Rp. " . number_format($total_saldo_pasiva, 0, ',', '.'), 1, 1, 'R'); // Adjusted alignment and removed extra parameter
+        $pdf->Cell(71, 10, "Rp. " . number_format($total_saldo_pasiva, 0, ',', '.'), 1, 0, 'R'); // Adjusted alignment and removed extra parameter
+        $pdf->Ln();
+
+        if($total_saldo_aktiva == $total_saldo_pasiva){
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(135, 10, 'KETERANGAN', 1, 0, 'C'); // Adjusted width
+            $pdf->Cell(142, 10, "BALANCE", 1, 0, 'C'); // Adjusted alignment and removed extra parameter
+            $pdf->Ln();
+        } else {
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(135, 10, 'KETERANGAN', 1, 0, 'C'); // Adjusted width
+            $pdf->Cell(142, 10, "UNBALANCE", 1, 0, 'C'); // Adjusted alignment and removed extra parameter
+            $pdf->Ln();
+        }
 
         // Footer
-        $pdf->SetY(250);
+        $pdf->SetY(175);
         $pdf->SetX(190);
         $pdf->SetFont('Arial', 'I', 8);
         $pdf->Cell(0, 10, "Dicetak Oleh Akuntan : " . $office->nama_perusahaan . " Pada " . date('d-m-y H:i:s') . " WIB", 0, 0, 'C');
 
-        return $pdf->Output('D', "Neraca $periode.pdf");
+        return $pdf->Output('D', "Laporan Neraca $periode.pdf");
     }
 }

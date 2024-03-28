@@ -14,7 +14,7 @@
                         @method('post')
                         <div class="mb-6">
                             <x-input-label for="kode_akun" :value="__('Kode Akun')" />
-                            <x-text-input id="kode_akun" name="kode_akun" type="text" class="block w-full mt-1" required
+                            <x-text-input id="kode_akun" name="kode_akun" type="number" class="block w-full mt-1" required
                                 autofocus autocomplete="kode_akun" :value="old('kode_akun')" />
                             <x-input-error class="mt-2" :messages="$errors->get('kode_akun')" />
                         </div>
